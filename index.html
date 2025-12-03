@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ching-Ting (Krista) Fu | Marketing Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght=700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2C3E50;
+            --accent: #D4A373;
+            --bg-light: #FAFAFA;
+            --text-main: #333333;
+            --text-sub: #666666;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--text-main); background-color: var(--bg-light); overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: var(--primary); }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        /* --- Navigation --- */
+        nav { 
+            position: fixed; top: 0; width: 100%; 
+            background: rgba(255, 255, 255, 0.98); 
+            backdrop-filter: blur(10px); z-index: 1000; 
+            padding: 1.2rem 5%; 
+            display: flex; justify-content: space-between; align-items: center; 
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05); 
+        }
+        .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; z-index: 1002; }
+        .logo span { color: var(--accent); }
+        
+        /* Desktop Menu */
+        .nav-menu { display: flex; gap: 2.5rem; }
+        .nav-menu a { font-weight: 500; position: relative; font-size: 0.95rem; }
+        .nav-menu a:hover { color: var(--accent); }
+
+        /* Mobile Menu Button */
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; z-index: 1002; color: var(--primary); }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: white; z-index: 1001;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            gap: 2rem;
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+        }
+        .mobile-menu.active { transform: translateX(0); }
+        .mobile-menu a { font-size: 1.8rem; font-family: 'Playfair Display', serif; color: var(--primary); }
+        .mobile-menu a:hover { color: var(--accent); }
+
+        /* --- Hero --- */
+        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 1.5rem; background: radial-gradient(circle at top right, #f3f4f6 0%, #ffffff 100%); padding-top: 60px; }
+        .hero-content { max-width: 800px; animation: fadeInUp 1s ease; }
+        .hero-greeting { font-size: 1.2rem; color: var(--accent); font-weight: 600; margin-bottom: 1rem; display: block; letter-spacing: 2px; text-transform: uppercase; }
+        .hero h1 { font-size: 4rem; margin-bottom: 1.5rem; line-height: 1.1; }
+        /* 修正後的 CSS: 確保按鈕上方有足夠的間距 */
+        .hero p { font-size: 1.2rem; color: var(--text-sub); max-width: 600px; margin: 0 auto 2.5rem auto; }
+        .btn { display: inline-block; padding: 1rem 2.5rem; background-color: var(--primary); color: var(--white); border-radius: 50px; font-weight: 600; box-shadow: 0 5px 15px rgba(44, 62, 80, 0.3); cursor: pointer; }
+        .btn:hover { transform: translateY(-3px); background-color: #34495e; }
+
+        /* --- Sections --- */
+        .section { padding: 6rem 10%; }
+        .section-header { margin-bottom: 4rem; text-align: center; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .section-header p { color: var(--text-sub); max-width: 600px; margin: 0 auto; }
+
+        .mission { background: var(--primary); color: var(--white); padding: 6rem 10%; text-align: center; }
+        .mission h2 { color: var(--white); margin-bottom: 2rem; font-size: 2.5rem; }
+        .mission p { font-size: 1.5rem; font-weight: 300; max-width: 900px; margin: 0 auto; }
+        .mission-highlight { color: var(--accent); font-weight: 600; }
+
+        /* --- Projects Grid --- */
+        .projects-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 3rem; 
+        }
+        .project-card { 
+            background: var(--white); border-radius: 20px; overflow: hidden; 
+            box-shadow: var(--card-shadow); transition: var(--transition); 
+            border: 1px solid rgba(0,0,0,0.05); display: flex; 
+            flex-direction: column; cursor: pointer; 
+        }
+        .project-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        
+        /* 專案卡片視覺區 (新增 relative 以便定位疊加層) */
+        .project-image { 
+            height: 220px; 
+            position: relative; 
+            overflow: hidden; 
+            background-color: #eee;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+
+        /* 讓圖片在 project-image 裡居中覆蓋 */
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        /* 圖片疊加層樣式 - 關鍵增強視覺吸引力 */
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.75); /* 使用 primary 色搭配 75% 透明度 */
+            opacity: 1; /* 預設不透明度為 1 */
+            transition: background 0.4s ease, opacity 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* 滑鼠滑過時的效果 */
+        .project-card:hover img {
+            transform: scale(1.1); /* 圖片輕微放大 */
+        }
+        .project-card:hover .image-overlay {
+            background: rgba(212, 163, 115, 0.7); /* 滑鼠滑過時，使用 accent 色疊加，暗示點擊 */
+        }
+
+        /* 將專案標題和類別移入疊加層 */
+        .project-overlay-category {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--white); /* 白色文字 */
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .project-overlay-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--white); /* 白色標題 */
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+        }
+        .overlay-cta {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: var(--accent);
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        .project-card:hover .overlay-cta {
+            background-color: var(--white); /* 滑鼠滑過時 CTA 變成白色 */
+        }
+
+        /* 隱藏原本的標題和類別，因為它們現在在疊加層裡 */
+        .project-content .project-category,
+        .project-content .project-title {
+            display: none;
+        }
+        
+        .project-content { padding: 2rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .project-desc { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 1.5rem; }
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; }
+        .tech-badge { background: #f0f2f5; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: #555; }
+
+        /* Project CTA Button (新增) */
+        .project-cta {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+            text-align: right;
+        }
+        .project-cta span {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        .project-cta span i { margin-left: 5px; transition: transform 0.3s; }
+        .project-card:hover .project-cta span { color: var(--accent); }
+        .project-card:hover .project-cta span i { transform: translateX(5px); }
+        
+        /* --- Skills --- */
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .skill-box { padding: 2rem; background: white; border-radius: 15px; box-shadow: var(--card-shadow); display: flex; flex-direction: column; align-items: flex-start; }
+        .skill-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem; align-self: center; }
+        .skill-box h3 { align-self: center; margin-bottom: 0.5rem; }
+
+        /* --- Experience (Enhanced) --- */
+        .timeline-section { background-color: #fff; }
+        .timeline { max-width: 800px; margin: 0 auto; position: relative; padding-left: 2rem; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 2px; background: #eee; }
+        .timeline-item { position: relative; padding-bottom: 3rem; }
+        .timeline-dot { position: absolute; left: -2.4rem; top: 0.3rem; width: 16px; height: 16px; background: var(--accent); border-radius: 50%; border: 4px solid #fff; box-shadow: 0 0 0 2px var(--accent); }
+        .timeline-date { font-size: 0.9rem; color: var(--text-sub); margin-bottom: 0.5rem; font-weight: 600; }
+        .timeline-role { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.3rem; }
+        .timeline-company { font-style: italic; color: var(--text-sub); display: block; margin-bottom: 1rem; font-weight: 500; }
+        
+        /* List styles for Experience */
+        .timeline-item ul { list-style: disc; margin-left: 1.2rem; color: var(--text-sub); font-size: 0.95rem; }
+        .timeline-item li { margin-bottom: 0.5rem; }
+
+        /* --- Footer --- */
+        footer { background: var(--primary); color: white; padding: 4rem 10%; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 2rem 0; }
+        .footer-links a { font-size: 1.5rem; color: white; transition: var(--transition); }
+        .footer-links a:hover { color: var(--accent); }
+
+        /* --- Modals --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-container { background: white; width: 90%; max-width: 700px; max-height: 90vh; border-radius: 20px; padding: 3rem; position: relative; overflow-y: auto; transform: translateY(50px); transition: transform 0.3s ease; }
+        .modal-overlay.active .modal-container { transform: translateY(0); }
+        .modal-close { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; color: #999; cursor: pointer; }
+        .modal-close:hover { color: var(--primary); }
+        .modal-header { margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+        .modal-title { font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .modal-subtitle { color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .modal-body ul { list-style: disc; margin-left: 1.5rem; color: var(--text-sub); }
+        .modal-body h4 { margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--primary); }
+        
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Modal Summary Box (用於 Modal 8) */
+        .modal-summary { background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--accent); }
+        .modal-summary p { margin-bottom: 0.5rem; font-size: 0.95rem; color: #555; }
+        .modal-summary strong { color: var(--primary); font-weight: 700; margin-right: 5px; }
+        
+        /* 專門為新的 Impact & Results 樣式添加 */
+        .impact-list { list-style: none; padding-left: 0; margin-top: 1rem; }
+        .impact-list li { margin-bottom: 1.2rem; padding: 0.5rem 0; border-bottom: 1px dashed #f0f0f0; }
+        .impact-list li:last-child { border-bottom: none; margin-bottom: 0; }
+        .impact-title { font-weight: 700; color: var(--primary); display: block; margin-bottom: 0.2rem; font-size: 1.1rem; }
+        .impact-desc { color: var(--text-sub); font-size: 0.9rem; }
+        .impact-note { font-weight: 600; color: var(--accent); margin-right: 5px; }
+
+        /* Key Stats Grid (用於 Modal 8) */
+        .key-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .stat-card { padding: 1rem; background: #fff; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; }
+        .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--accent); margin-bottom: 0.2rem; }
+        .stat-label { font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* --- Before/After Slider 樣式 (Modal 2) --- */
+        .comparison-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 350px;
+            margin: 1.5rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+
+        .comparison-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+        }
+
+        .img-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 3; /* CHANGED: 確保能覆蓋標籤 */
+            border-right: 3px solid #fff;
+        }
+
+        .img-overlay .comparison-image {
+            width: 600px; /* 需與 .comparison-container max-width 一致 */
+            max-width: none;
+        }
+
+        .slider-label {
+            position: absolute;
+            top: 15px;
+            padding: 5px 12px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 20px;
+            z-index: 2; /* 保持在覆蓋層之下 */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .label-before { right: 15px; }
+        .label-after { left: 15px; }
+
+        .slider-range {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 3;
+            cursor: ew-resize;
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            z-index: 4; /* CHANGED: 確保手柄在最上層 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            pointer-events: none;
+            color: var(--primary);
+        }
+
+        /* --- 新功能展示網格 (Modal 2) --- */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .stats-badge {
+            display: inline-block;
+            background: #eef2f7;
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        /* --- 圖表疊加文字樣式 (Modal 8) --- */
+        .chart-wrapper {
+            position: relative; 
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+        }
+
+        .chart-wrapper img {
+            width: 100%;
+            display: block;
+            height: auto;
+        }
+
+        /* 中間的白色浮動框 */
+        .chart-callout {
+            position: absolute; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+            text-align: center;
+            min-width: 200px;
+            white-space: nowrap; 
+            border: 1px solid rgba(0,0,0,0.05);
+            z-index: 10;
+        }
+
+        .chart-callout h3 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.5rem; 
+            font-weight: 800;
+        }
+
+        .chart-callout p {
+            margin: 0;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 0.2rem;
+        }
+
+        /* --- RESPONSIVE QUERIES --- */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .mobile-toggle { display: block; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1rem; }
+            .section, .mission { padding: 4rem 6%; }
+            .projects-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .modal-container { width: 95%; padding: 1.5rem; margin-top: 20px; }
+            .modal-title { font-size: 1.5rem; }
+            .timeline-dot { left: -1.9rem; width: 12px; height: 12px; }
+            
+            /* RWD for slider/chart */
+            .img-overlay .comparison-image { width: 95vw; } /* Adjusted to match container width approximation */
+            .comparison-container { height: 250px; }
+            .chart-callout { padding: 0.8rem 1.2rem; }
+            .chart-callout h3 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">CHING-TING <span>FU</span></a>
+        <div class="nav-menu">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Portfolio</a>
+            <a href="#experience">Experience</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="mobile-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" onclick="toggleMobileMenu()">Home</a>
+        <a href="#about" onclick="toggleMobileMenu()">About</a>
+        <a href="#skills" onclick="toggleMobileMenu()">Skills</a>
+        <a href="#projects" onclick="toggleMobileMenu()">Portfolio</a>
+        <a href="#experience" onclick="toggleMobileMenu()">Experience</a>
+        <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+    </div>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="hero-greeting">Hi! It's Krista</span>
+            <h1>Strategic Brand & <br>Creative Leader</h1>
+            <p>Turning business goals into high-impact digital storytelling, integrated campaigns, and scalable content systems.</p>
+            <a href="#projects" class="btn">View 6 Selected Works</a>
+        </div>
+    </section>
+
+    <section id="about" class="mission">
+        <div class="container">
+            <h2>My Mission</h2>
+            <p>"I help startups and small businesses grow through clear, strategic, and creative marketing. My mission is to help brands <span class="mission-highlight">express who they truly are</span>-clearly, creatively, and with purpose."</p>
+        </div>
+    </section>
+    
+    <section id="skills" class="section" style="background-color: #fff;">
+        <div class="section-header">
+            <h2>Core Capabilities</h2>
+            <p>A comprehensive toolkit bridging creative storytelling with data-driven performance.</p>
+        </div>
+        
+        <div class="skills-container">
+            
+            <div class="skill-box">
+                <i class="fas fa-layer-group skill-icon"></i>
+                <h3>Brand & Content</h3>
+                <ul style="text-align: left; margin-top: 1rem; color: #666; font-size: 0.9rem; line-height: 1.8;">
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>Brand Identity & Strategy</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>Strategic Storytelling</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>Persuasive Copywriting</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>Social Media Management</li>
+                </ul>
+            </div>
+
+            <div class="skill-box">
+                <i class="fas fa-chart-line skill-icon"></i>
+                <h3>Digital Growth</h3>
+                <ul style="text-align: left; margin-top: 1rem; color: #666; font-size: 0.9rem; line-height: 1.8;">
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>SEO & Keyword Research</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>Google Ads & Meta Ads</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>Email Automation</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>Conversion Optimization</li>
+                </ul>
+            </div>
+
+            <div class="skill-box">
+                <i class="fas fa-pencil-ruler skill-icon"></i>
+                <h3>Creative & Tools</h3>
+                <ul style="text-align: left; margin-top: 1rem; color: #666; font-size: 0.9rem; line-height: 1.8;">
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>Adobe Creative Suite</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>Figma & Canva</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>UX/UI Visual Systems</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>WordPress & Squarespace</li>
+                </ul>
+            </div>
+
+            <div class="skill-box">
+                <i class="fas fa-tasks skill-icon"></i>
+                <h3>Data & Management</h3>
+                <ul style="text-align: left; margin-top: 1rem; color: #666; font-size: 0.9rem; line-height: 1.8;">
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>GA4 Analytics & Power BI</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>HubSpot CRM</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>Project Management</li>
+                    <li><i class="fas fa-check" style="color: #D4A373; margin-right: 8px;"></i>Asana & Trello</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="section-header">
+            <h2>Selected Projects</h2>
+            <p>A showcase of 6 key projects delivering growth and brand impact.</p>
+        </div>
+
+        <div class="projects-grid">
+            
+            <article class="project-card" onclick="openModal('modal8')">
+                <div class="project-image">
+                    <img src="SEO Growth.jpg" alt="Awesome Keep SEO Acceleration Thumbnail">
+                    <div class="image-overlay">
+                        <span class="project-overlay-category">Growth & SEO</span>
+                        <h3 class="project-overlay-title">Awesome Keep - SEO Acceleration</h3>
+                        <span class="overlay-cta">View Case Study</span>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category">Growth & SEO</span>
+                    <h3 class="project-title">Awesome Keep - SEO Acceleration</h3>
+                    <p class="project-desc">Executed SEO acceleration strategy resulting in 10x organic traffic growth and improved Avg Rank to 9.6.</p>
+                    <div class="tech-stack"><span class="tech-badge">SEO</span><span class="tech-badge">Growth</span><span class="tech-badge">Analyst</span></div>
+                    <div class="project-cta"><span>View Project <i class="fas fa-arrow-right"></i></span></div>
+                </div>
+            </article>
+
+            <article class="project-card" onclick="openModal('modal2')">
+                <div class="project-image">
+                    <img src="Website Revamp.jpg" alt="Awesome Keep Identity Revamp Thumbnail">
+                    <div class="image-overlay">
+                        <span class="project-overlay-category">Digital Identity</span>
+                        <h3 class="project-overlay-title">Awesome Keep - Website & Brand Redesign</h3>
+                        <span class="overlay-cta">View Case Study</span>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category">Digital Identity</span>
+                    <h3 class="project-title">Awesome Keep - Website & Brand Redesign</h3>
+                    <p class="project-desc">Rebuilt the full website identity, structure, and content system to establish brand authority.</p>
+                    <div class="tech-stack"><span class="tech-badge">Creative</span><span class="tech-badge">UX/UI</span><span class="tech-badge">Content Arch.</span></div>
+                    <div class="project-cta"><span>View Project <i class="fas fa-arrow-right"></i></span></div>
+                </div>
+            </article>
+
+            <article class="project-card" onclick="openModal('modal6')">
+                <div class="project-image">
+                    <img src="Automation Flowchart.jpg" alt="Integrated B2B Lead Gen Thumbnail">
+                    <div class="image-overlay">
+                        <span class="project-overlay-category">Lead Generation</span>
+                        <h3 class="project-overlay-title">Awesome Keep - Lead Magnet Funnel</h3>
+                        <span class="overlay-cta">View Case Study</span>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category">Lead Generation</span>
+                    <h3 class="project-title">Awesome Keep - Lead Magnet Funnel</h3>
+                    <p class="project-desc">Designed a complete lead acquisition and email automation system to convert visitors into engaged subscribers.</p>
+                    <div class="tech-stack"><span class="tech-badge">HubSpot</span><span class="tech-badge">Automation</span><span class="tech-badge">Lifecycle</span></div>
+                    <div class="project-cta"><span>View Project <i class="fas fa-arrow-right"></i></span></div>
+                </div>
+            </article>
+
+            <article class="project-card" onclick="openModal('modal7')">
+                <div class="project-image">
+                    <img src="Influencer Marketing Brand Logo Collage.jpg" alt="Brand Pop-up & Visual Design Thumbnail">
+                    <div class="image-overlay">
+                        <span class="project-overlay-category">Brand Management</span>
+                        <h3 class="project-overlay-title">Silver Net - Influencer Marketing</h3>
+                        <span class="overlay-cta">View Case Study</span>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category">Brand Management</span>
+                    <h3 class="project-title">Silver Net - Influencer Marketing</h3>
+                    <p class="project-desc">Managed end-to-end brand ownership for international brands, including influencer campaigns and localization.</p>
+                    <div class="tech-stack"><span class="tech-badge">Influencer</span><span class="tech-badge">Localization</span><span class="tech-badge">Brand Mgmt</span></div>
+                    <div class="project-cta"><span>View Project <i class="fas fa-arrow-right"></i></span></div>
+                </div>
+            </article>
+
+            <article class="project-card" onclick="openModal('modal3')">
+                <div class="project-image">
+                    <img src="Cross-Border Growth.jpg" alt="Cross-Border Expansion Thumbnail">
+                    <div class="image-overlay">
+                        <span class="project-overlay-category">Operations & Growth</span>
+                        <h3 class="project-overlay-title">Silver Net - Brand Annual Business Review & Market Strategy</h3>
+                        <span class="overlay-cta">View Case Study</span>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category">Operations & Growth</span>
+                    <h3 class="project-title">Silver Net - Brand Annual Business Review & Market Strategy</h3>
+                    <p class="project-desc">Managed multi-brand business performance, reporting directly to global brand principals.</p>
+                    <div class="tech-stack"><span class="tech-badge">B2B</span><span class="tech-badge">Logistics</span><span class="tech-badge">Expansion</span></div>
+                    <div class="project-cta"><span>View Project <i class="fas fa-arrow-right"></i></span></div>
+                </div>
+            </article>
+
+            <article class="project-card" onclick="openModal('modal4')">
+                <div class="project-image">
+                    <img src="CBES Campaigns.jpg" alt="Seasonal Ad Campaigns Thumbnail">
+                    <div class="image-overlay">
+                        <span class="project-overlay-category">eCommerce Growth</span>
+                        <h3 class="project-overlay-title">CBES Group - Seasonal Campaigns</h3>
+                        <span class="overlay-cta">View Case Study</span>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category">eCommerce Growth</span>
+                    <h3 class="project-title">CBES Group - Seasonal Campaigns</h3>
+                    <p class="project-desc">Managed seasonal digital campaigns and multi-region eCommerce marketplace operations across NA and EU.</p>
+                    <div class="tech-stack"><span class="tech-badge">Paid Ads</span><span class="tech-badge">eCommerce</span><span class="tech-badge">ROI</span></div>
+                    <div class="project-cta"><span>View Project <i class="fas fa-arrow-right"></i></span></div>
+                </div>
+            </article>
+            
+        </div>
+    </section>
+
+    <section id="experience" class="section timeline-section">
+        <div class="section-header"><h2>Professional Experience</h2></div>
+        <div class="timeline">
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Jul 2025 - Present</div>
+                <h3 class="timeline-role">Marketing Specialist</h3>
+                <span class="timeline-company">Awesome Keep - Remote Ontario, Canada</span>
+                <ul>
+                    <li>Built the brand's full digital identity including website structure, UX, brand voice, and visual system, ensuring consistency across all channels.</li>
+                    <li>Owned the integrated content calendar and oversaw cross-channel creative, blogs, social, reels, newsletters, landing pages.</li>
+                    <li>Developed an end-to-end email lead-magnet system, increasing subscriber retention and nurturing pipeline engagement.</li>
+                    <li>Analyzed GA4 insights to optimize content cadence, improve on-page performance, and refine conversion paths.</li>
+                    <li>Led SEO acceleration achieving +521% impressions and improving average keyword ranking 36.6 → 9.6, resulting in 10x organic traffic growth.</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Jul 2023 - Jul 2024</div>
+                <h3 class="timeline-role">Sales & Marketing Specialist</h3>
+                <span class="timeline-company">Silver Net Global Ltd- Taipei, Taiwan</span>
+                <ul>
+                    <li>Managed full product operations for 8+ international lifestyle brands, from forecasting and procurement to launch readiness and compliance.</li>
+                    <li>Led pricing, margin modeling, and multi-market SKU evaluation to support profitable category growth.</li>
+                    <li>Directed cross-border coordination with France-based principals on packaging, artwork accuracy, and delivery timelines.</li>
+                    <li>Built and executed multi-channel marketing initiatives and supervised a 6-member team across influencer, distribution, event and retail marketing.</li>
+                    <li>Boosted category margin by 9-12% and increased annual sell-through by 21% through optimized planning and integrated marketing execution.</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Jan 2021 - May 2022</div>
+                <h3 class="timeline-role">Brand Marketing Specialist</h3>
+                <span class="timeline-company">CBES Group- Taipei, Taiwan</span>
+                <ul>
+                    <li>Led data-driven eCommerce and ad strategies (budget €30K/month), achieving 20-28% ROAS uplift and improved conversion performance.</li>
+                    <li>Managed SEO, on-site UX optimization, and multi-platform expansion (eBay DE/IT, Kaufland, Newegg) to grow traffic and sales.</li>
+                    <li>Delivered seasonal campaigns and cross-team initiatives with Google and Insider, working closely with IT and Operations teams to enhance engagement and overall site performance.</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Nov 2019 - Jul 2020</div>
+                <h3 class="timeline-role">Marketing Specialist</h3>
+                <span class="timeline-company">The Pure Honest Co.- Taipei, Taiwan</span>
+                <ul>
+                    <li>Supported SEO, web content refresh, and brand-aligned social creative execution.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="contact">
+        <h2>Let's Connect</h2>
+        <p style="margin-top: 1rem; color: rgba(255,255,255,0.8);">Based in Vancouver, BC</p>
+        <div class="footer-links">
+            <a href="mailto:ffoyo0614@gmail.com"><i class="fas fa-envelope"></i></a>
+            <a href="https://linkedin.com/in/ching-ting-fu" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="tel:+12368627173"><i class="fas fa-phone"></i></a>
+        </div>
+        <div style="margin-top: 3rem; font-size: 0.8rem; color: rgba(255,255,255,0.5);">
+            &copy; 2025 Ching-Ting (Krista) Fu. All Rights Reserved.
+        </div>
+    </footer>
+
+    <div id="modal8" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-container">
+            <span class="modal-close" onclick="closeModalDirect()">&times;</span>
+            <div class="modal-header">
+                <div class="modal-subtitle">SEO Growth & Performance</div>
+                <h3 class="modal-title">Awesome Keep - SEO Acceleration</h3>
+            </div>
+            
+            <div class="modal-summary">
+                <p><strong>What:</strong> Executed an SEO acceleration strategy over 6 months.</p>
+                <p><strong>Problem:</strong> Zero visibility for high-intent keywords; low organic traffic.</p>
+                <p><strong>Result:</strong> Achieved 10x organic traffic growth and improved Avg Rank to 9.6.</p>
+            </div>
+            
+            <div class="modal-body">
+                
+                <h4>Growth Visualization</h4>
+                <div class="chart-wrapper">
+                    <img src="SEO Growth.jpg" alt="Awesome Keep SEO Growth Chart">
+                    
+                    <div class="chart-callout">
+                        <h3>From 0 → 2,250 Impressions</h3>
+                        <p>10× Growth in 4 Months (Organic Search)</p>
+                    </div>
+                </div>
+                <p style="text-align: center; font-size: 0.85rem; color: #888; margin-top: 0.5rem; margin-bottom: 2rem;">
+                    <em>The chart shows a rapid growth curve following the implementation of the SEO content strategy.</em>
+                </p>
+
+                <h4>Impact & Results</h4>
+                <div class="key-stats-grid">
+                    <div class="stat-card"><div class="stat-value">+521%</div><div class="stat-label">Impressions</div></div>
+                    <div class="stat-card"><div class="stat-value">9.6</div><div class="stat-label">Avg Rank (from 36.6)</div></div>
+                    <div class="stat-card"><div class="stat-value">Top 10</div><div class="stat-label">Key Keywords</div></div>
+                </div>
+                
+                <h4>Strategy Highlights</h4>
+                <ul>
+                    <li><strong>Keyword Mapping:</strong> Targeted high-value, low-competition keywords.</li>
+                    <li><strong>Content Velocity:</strong> Maintained weekly high-quality article publishing schedule.</li>
+                    <li><strong>On-Page Optimization:</strong> Executed rigorous technical checks and internal linking strategies.</li>
+                </ul>
+                <h4>Role</h4>
+                <p>Growth / Analyst / SEO Strategy</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-container">
+            <span class="modal-close" onclick="closeModalDirect()">&times;</span>
+            
+            <div class="modal-header">
+                <div class="modal-subtitle">Digital Identity & UX Revamp</div>
+                <h3 class="modal-title">Awesome Keep - Website & Brand Redesign</h3>
+            </div>
+            
+            <div class="modal-summary">
+                <p><strong>What:</strong> Rebuilt the full website identity, structure, and content system to establish brand authority and create a scalable digital ecosystem.</p>
+                <p><strong>Problem:</strong> Outdated visual identity, unclear service positioning, and a fragmented content structure led to high bounce rates and limited conversions.</p>
+                <p><strong>Result:</strong> Delivered a cohesive brand identity, modern UX layout, and a strategic content architecture that now supports SEO growth, service clarity, and user engagement.</p>
+            </div>
+
+            <div class="modal-body">
+                <h4>Visual Identity Comparison</h4>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+                    Moved from a fragmented design to a clean, cohesive, and modern visual system.
+                </p>
+
+                <div class="comparison-container" id="compareBox">
+                    
+                    <img src="awesome-before.jpg" alt="Before" class="comparison-image">
+                    <span class="slider-label label-before">Old Design</span>
+
+                    <div class="img-overlay" id="imgOverlay">
+                        <img src="awesome-after.jpg" alt="After" class="comparison-image" style="width: 600px; max-width: none;">
+                        <span class="slider-label label-after">New Identity</span>
+                    </div>
+
+                    <div class="slider-handle" id="sliderHandle"><i class="fas fa-arrows-alt-h"></i></div>
+
+                    <input type="range" min="0" max="100" value="50" class="slider-range" oninput="updateSlider(this.value)">
+                </div>
+                
+                <h4 style="margin-top: 2.5rem;">Impact & Results</h4>
+                <ul class="impact-list">
+                    <li><span class="impact-title">15 -> 40+ Total pages expanded</span><span class="impact-desc">through new service pages, blog hub, and resource system.</span></li>
+                    <li><span class="impact-title">Significant improvement in homepage clarity</span><span class="impact-desc">for scannability and mobile usability.</span></li>
+                    <li><span class="impact-title">Consistent brand voice</span><span class="impact-desc">established across all pages and digital touchpoints.</span></li>
+                    <li><span class="impact-title">Improved conversion flow</span><span class="impact-desc">through clearer CTAs and service positioning.</span></li>
+                </ul>
+
+                <h4 style="margin-top: 2rem;">Strategy Highlights</h4>
+                <ul>
+                    <li><strong>Visual Identity:</strong> Introduced a cleaner color palette, typography system, and updated brand voice.</li>
+                    <li><strong>UX Redesign:</strong> Reworked homepage layout, hero messaging, service navigation, and mobile RWD.</li>
+                    <li><strong>Content Architecture:</strong> Built a scalable blog hub, category system, and therapist page templates.</li>
+                    <li><strong>Conversion Flow:</strong> Streamlined CTA hierarchy and improved appointment booking journey.</li>
+                </ul>
+
+                <h4 style="margin-top: 1.5rem;">Role</h4>
+                <p>Brand Identity / UX Writer / Content Architect</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal6" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-container">
+            <span class="modal-close" onclick="closeModalDirect()">&times;</span>
+            <div class="modal-header">
+                <div class="modal-subtitle">Lifecycle Email Automation System</div>
+                <h3 class="modal-title">Awesome Keep - Lead Magnet Funnel</h3>
+            </div>
+            
+            <div class="modal-summary">
+                <p><strong>What:</strong> Designed a complete lead acquisition and email automation system to convert website visitors into engaged subscribers.</p>
+                <p><strong>Problem:</strong> No structured lead-generation flow, no automated onboarding, and low newsletter retention.</p>
+                <p><strong>Result:</strong> Built a high-performing funnel that delivers lead magnets automatically, increases subscriber engagement, and nurtures new leads through a multi-step sequence.</p>
+            </div>
+            
+            <div class="modal-body">
+                <h4>Impact & Results</h4>
+                <ul class="impact-list">
+                    <li><span class="impact-title">100% automated delivery</span><span class="impact-desc">of lead magnet PDFs upon signup.</span></li>
+                    <li><span class="impact-title">2-step onboarding sequence</span><span class="impact-desc">improving early engagement and subscriber activity.</span></li>
+                    <li><span class="impact-title">Higher subscriber retention</span><span class="impact-desc">through structured nurturing emails over 4 weeks.</span></li>
+                    <li><span class="impact-title">Improved segmentation</span><span class="impact-desc">using tag-based logic and behavioral triggers.</span></li>
+                </ul>
+
+                <h4>Strategy Highlights</h4>
+                <ul>
+                    <li><strong>Lead Magnet System:</strong> Created downloadable therapeutic guides with automated email delivery.</li>
+                    <li><strong>Automation Flow:</strong> Built multi-step sequences with delays, segmentation rules, and follow-up logic.</li>
+                    <li><strong>CTA Integration:</strong> Mapped all IG + blog + site CTAs into one cohesive funnel.</li>
+                    <li><strong>Email Structure:</strong> Wrote onboarding messages with clear value, clarity, and brand voice alignment.</li>
+                </ul>
+
+                <h4 style="margin-top: 1.5rem;">Role</h4>
+                <p>Lifecycle Marketing / CRM Automation / Content Strategy</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal7" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-container">
+            <span class="modal-close" onclick="closeModalDirect()">&times;</span>
+            <div class="modal-header">
+                <div class="modal-subtitle">Influencer Partnerships & Brand Management</div>
+                <h3 class="modal-title">Silver Net Global - Brand Ownership & Influencer Strategy</h3>
+            </div>
+            
+            <div class="modal-summary">
+                <p><strong>What:</strong> Managed end-to-end brand ownership for multiple international beauty and lifestyle brands, including influencer campaigns and cross-border communication.</p>
+                <p><strong>Problem:</strong> Low brand awareness in Taiwan market and limited local marketing resources from overseas suppliers.</p>
+                <p><strong>Result:</strong> Improved brand visibility through strategic creator partnerships, localized messaging, and better alignment between suppliers and the Taiwan market.</p>
+            </div>
+            
+            <div class="modal-body">
+                <h4>Impact & Results</h4>
+                <ul class="impact-list">
+                    <li><span class="impact-title">10+ influencer collaborations</span><span class="impact-desc">including unboxings, review videos, and themed campaigns.</span></li>
+                    <li><span class="impact-title">Stronger brand localization</span><span class="impact-desc">through culturally relevant content scripts and messaging alignment.</span></li>
+                    <li><span class="impact-title">Improved supplier communication</span><span class="impact-desc">with clear reporting and campaign proposals.</span></li>
+                    <li><span class="impact-title">Higher retail sell-through</span><span class="impact-desc">supported by creator traffic and product education.</span></li>
+                </ul>
+
+                <h4>Strategy Highlights</h4>
+                <ul>
+                    <li><strong>Influencer Campaigns:</strong> Identified suitable creators, managed outreach, negotiated deliverables, and coordinated content timelines.</li>
+                    <li><strong>Brand Management:</strong> Acted as the daily point-of-contact for multiple international brands, aligning goals and assets.</li>
+                    <li><strong>Localized Content:</strong> Developed Taiwan-specific angles, messages, and product positioning.</li>
+                    <li><strong>Cross-Border Coordination:</strong> Managed expectations, logistics details, and performance reporting for overseas suppliers.</li>
+                </ul>
+
+                <h4 style="margin-top: 1.5rem;">Role</h4>
+                <p>Brand Owner / Influencer Marketing / Cross-Border Communication</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-container">
+            <span class="modal-close" onclick="closeModalDirect()">&times;</span>
+            <div class="modal-header">
+                <div class="modal-subtitle">Taiwan Market Expansion & Vendor Operations</div>
+                <h3 class="modal-title">Silver Net Global - Cross-Border Growth</h3>
+            </div>
+            
+            <div class="modal-summary">
+                <p><strong>What:</strong> Managed multi-brand business performance, reporting directly to global brand principals.</p>
+                <p><strong>Problem:</strong> Limited regional insights, inconsistent forecasting, and misaligned annual plans between distributors and brand HQ.</p>
+                <p><strong>Result:</strong> Delivered structured YOY/QOQ/MOM business reviews, improved vendor logistics consistency by 12%, and drove 33% overall market expansion.</p>
+            </div>
+            
+            <div class="modal-body">
+                <h4>Impact & Results</h4>
+                <ul class="impact-list">
+                    <li><span class="impact-title">21% increase</span><span class="impact-desc">in annual sell-through through improved planning and SKU evaluation.</span></li>
+                    <li><span class="impact-title">9–12% margin lift</span><span class="impact-desc">driven by refined pricing, assortment, and procurement alignment.</span></li>
+                    <li><span class="impact-title">12% better delivery consistency</span><span class="impact-desc">after tightening supplier communication and planning workflows.</span></li>
+                    <li><span class="impact-title">Higher forecast accuracy</span><span class="impact-desc">through structured sales analysis and quarterly reviews.</span></li>
+                </ul>
+
+                <h4>Strategy Highlights</h4>
+                <ul>
+                    <li><strong>Sales Performance Review:</strong> Delivered annual & quarterly business review decks (YOY/QOQ/MOM), covering pricing impact, promotion ROI, inventory turnover, and demand trends.</li>
+                    <li><strong>Forecasting & Budget Ownership:</strong> Led annual purchasing forecasts and budget planning across multiple brand portfolios.</li>
+                    <li><strong>Brand & Market Alignment:</strong> Collaborated with global brand principals to align Taiwan market plans, category priorities, and promotional calendars.</li>
+                    <li><strong>Category & Supply Optimization:</strong> Optimized SKU assortment and vendor negotiations, improving supply chain reliability by 12%.</li>
+                </ul>
+
+                <h4 style="margin-top: 1.5rem;">Role</h4>
+                <p>Brand Management / Category Planning / Supplier & Forecast Alignment</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-container">
+            <span class="modal-close" onclick="closeModalDirect()">&times;</span>
+            <div class="modal-header">
+                <div class="modal-subtitle">Seasonal Campaigns & Multi-Region eCommerce</div>
+                <h3 class="modal-title">CBES Group - Digital Advertising & Marketplace Optimization</h3>
+            </div>
+            
+            <div class="modal-summary">
+                <p><strong>What:</strong> Managed seasonal digital campaigns and multi-region eCommerce marketplace operations across Europe and North America.</p>
+                <p><strong>Problem:</strong> Fragmented campaign planning and under-optimized marketplace listings limited traffic and conversion performance.</p>
+                <p><strong>Result:</strong> Improved ROAS, increased channel visibility, and helped expand cross-border marketplace presence.</p>
+            </div>
+            
+            <div class="modal-body">
+                <h4>Impact & Results</h4>
+                <ul class="impact-list">
+                    <li><span class="impact-title">$30K/month ad portfolio</span><span class="impact-desc">managed across paid social and digital platforms.</span></li>
+                    <li><span class="impact-title">Higher ROAS</span><span class="impact-desc">through optimized creatives and targeting.</span></li>
+                    <li><span class="impact-title">Marketplace expansion</span><span class="impact-desc">into eBay DE/IT, Kaufland, and Newegg.</span></li>
+                    <li><span class="impact-title">Improved conversion flow</span><span class="impact-desc">via listing SEO, UX fixes, and data-driven content updates.</span></li>
+                </ul>
+
+                <h4>Strategy Highlights</h4>
+                <ul>
+                    <li><strong>Campaign Execution:</strong> Produced seasonal campaign visuals, banners, and promotional concepts.</li>
+                    <li><strong>Paid Performance:</strong> Monitored ads and collaborated with internal teams to improve budget efficiency.</li>
+                    <li><strong>Marketplace Optimization:</strong> Reworked titles, descriptions, and imagery for search ranking improvements.</li>
+                    <li><strong>Cross-Team Collaboration:</strong> Worked with IT and Operations on inventory, pricing, and listing requirements.</li>
+                </ul>
+
+                <h4 style="margin-top: 1.5rem;">Role</h4>
+                <p>Digital Marketing / Paid Ads / eCommerce Optimization</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.querySelector('.mobile-toggle i');
+            menu.classList.toggle('active');
+            if(menu.classList.contains('active')){ icon.classList.replace('fa-bars', 'fa-times'); } 
+            else { icon.classList.replace('fa-times', 'fa-bars'); }
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Reset slider to 50% when modal 2 opens
+            if (modalId === 'modal2') {
+                updateSlider(50);
+            }
+        }
+
+        function closeModal(event) {
+            // Close if clicking on the overlay itself
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeModalDirect() {
+            // Close when clicking the 'x' button
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+            document.body.style.overflow = 'auto';
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // --- Before/After Slider Function (Modal 2) ---
+        function updateSlider(val) {
+            // 1. 調整上層圖片 (After) 的寬度
+            const imgOverlay = document.getElementById('imgOverlay');
+            const sliderHandle = document.getElementById('sliderHandle');
+            
+            if (imgOverlay && sliderHandle) {
+                 imgOverlay.style.width = val + "%";
+                 // 2. 調整中間按鈕的位置
+                 sliderHandle.style.left = val + "%";
+            }
+        }
+        
+        // Ensure slider works correctly on load (especially for touch devices)
+        window.onload = function() {
+            const rangeInput = document.querySelector('.slider-range');
+            if (rangeInput) {
+                rangeInput.addEventListener('input', (e) => updateSlider(e.target.value));
+                updateSlider(rangeInput.value); // Initial position
+            }
+        };
+    </script>
+
+</body>
+</html>
